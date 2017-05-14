@@ -11,7 +11,7 @@ from optparse import OptionParser
 import json
 
 configNetworkCmd = {
-	'msg' : 'configNetworkCmd',
+	'msg' : 'configNetworkApi',
 	'username' : 'admin',
 	'password' : 'secret'
 }
