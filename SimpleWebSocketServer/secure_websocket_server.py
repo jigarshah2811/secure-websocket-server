@@ -10,11 +10,19 @@ from SimpleWebSocketServer.SimpleWebSocketServer import WebSocket, SimpleWebSock
 from optparse import OptionParser
 import json
 
-configNetworkCmd = {
-	'msg' : 'configNetworkApi',
+configNetworkApi = {
+	'api' : 'configNetworkApi',
 	'username' : 'admin',
 	'password' : 'secret'
 }
+
+getDeviceInfoApi = {
+	'api' : 'getDeviceInfoApi',
+	'username' : 'admin',
+	'password' : 'secret'
+}
+
+agent_apis = [configNetworkApi, getDeviceInfoApi]
 
 clients = []
 class SimpleWebSocket(WebSocket):
@@ -28,7 +36,10 @@ class SimpleWebSocket(WebSocket):
    def handleConnected(self):
       clients.append(self)
       print (self.address, 'connected')
-      self.sendMessage(json.dumps(configNetworkCmd, ensure_ascii=False))
+
+      # REST APIs to Agent Client
+      for api in agent_apis:
+          self.sendMessage(json.dumps(api, ensure_ascii=False))
 
    def handleClose(self):
       clients.remove(self)
